@@ -1,2 +1,3 @@
 [0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/development/scala-server/src/main/resources/hello.py,/development/scala-server/target/scala-2.13/classes/hello.py)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/development/scala-server/src/main/resources/argCatch.py,/development/scala-server/target/scala-2.13/classes/argCatch.py)[0m

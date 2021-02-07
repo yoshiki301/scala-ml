@@ -1,0 +1,386 @@
+# Coverage data, format version: 2.0
+# Statement data:
+# - id
+# - source path
+# - package name
+# - class name
+# - class type (Class, Object or Trait)
+# - full class name
+# - method name
+# - start offset
+# - end offset
+# - line number
+# - symbol name
+# - tree name
+# - is branch
+# - invocations count
+# - is ignored
+# - description (can be multi-line)
+# '' sign
+# ------------------------------------------
+1
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+<none>
+73
+74
+6
+<nosymbol>
+Literal
+false
+0
+false
+0
+
+2
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+159
+175
+8
+java.lang.String.+
+Apply
+false
+0
+false
+"python ".+(path)
+
+3
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+225
+236
+10
+java.lang.String.+
+Apply
+false
+0
+false
+" ".+(value)
+
+4
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+243
+262
+11
+java.lang.String.+
+Apply
+false
+0
+false
+command.+(addition)
+
+5
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+180
+269
+9
+scala.collection.immutable.List.foreach
+Apply
+false
+0
+false
+argv.foreach[Unit](((value: String) => {
+  val addition: String = " ".+(value);
+  command = command.+(addition)
+}))
+
+6
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+289
+323
+14
+scala.collection.IterableOnceOps.toList
+Select
+false
+0
+false
+scala.sys.process.Process.apply(command).lineStream.toList
+
+7
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+342
+345
+15
+scala.collection.immutable.Nil
+Select
+false
+0
+false
+scala.collection.immutable.Nil
+
+8
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+331
+345
+15
+java.lang.Object.!=
+Apply
+false
+0
+false
+process.!=(scala.collection.immutable.Nil)
+
+9
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+370
+377
+16
+scala.Predef.println
+Apply
+false
+0
+false
+scala.Predef.println(x)
+
+10
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+354
+378
+16
+scala.collection.immutable.List.foreach
+Apply
+false
+0
+false
+process.foreach[Unit](((x: Any) => scala.Predef.println(x)))
+
+11
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+385
+395
+17
+callpy.callPy.status_=
+Apply
+false
+0
+false
+callPy.this.status_=(1)
+
+12
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+346
+401
+15
+<nosymbol>
+Block
+true
+0
+false
+{
+  process.foreach[Unit](((x: Any) => scala.Predef.println(x)));
+  callPy.this.status_=(1)
+}
+
+13
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+413
+445
+19
+scala.Predef.println
+Apply
+false
+0
+false
+scala.Predef.println("process has no return")
+
+14
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+452
+462
+20
+callpy.callPy.status_=
+Apply
+false
+0
+false
+callPy.this.status_=(2)
+
+15
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+405
+468
+18
+<nosymbol>
+Block
+true
+0
+false
+{
+  scala.Predef.println("process has no return");
+  callPy.this.status_=(2)
+}
+
+16
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+Main
+Object
+callpy.Main
+main
+548
+558
+27
+callpy.callPy.<init>
+Apply
+false
+0
+false
+new callPy()
+
+17
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+Main
+Object
+callpy.Main
+main
+581
+588
+28
+scala.Array.apply
+Apply
+false
+0
+false
+args.apply(0)
+
+18
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+Main
+Object
+callpy.Main
+main
+590
+606
+28
+scala.collection.IterableOps.tail
+Select
+false
+0
+false
+scala.Predef.wrapRefArray[String](args).toList.tail
+
+19
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+Main
+Object
+callpy.Main
+main
+563
+607
+28
+callpy.callPy.callPython
+Apply
+false
+0
+false
+callpy.callPython(args.apply(0), scala.Predef.wrapRefArray[String](args).toList.tail)
+
+20
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+Main
+Object
+callpy.Main
+main
+620
+633
+29
+callpy.callPy.status
+Select
+false
+0
+false
+callpy.status
+
+21
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+Main
+Object
+callpy.Main
+main
+612
+634
+29
+scala.Predef.println
+Apply
+false
+0
+false
+scala.Predef.println(callpy.status)
+

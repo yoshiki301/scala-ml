@@ -1,0 +1,522 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          callPy.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier, monospace;'>1 <span style=''>package callpy
+</span>2 <span style=''>
+</span>3 <span style=''>import scala.sys.process._
+</span>4 <span style=''>
+</span>5 <span style=''>class callPy{
+</span>6 <span style=''>  var status = </span><span style='background: #AEF1AE'>0</span><span style=''>
+</span>7 <span style=''>  def callPython(path: String, argv: List[String] = Nil): Unit ={
+</span>8 <span style=''>    var command = </span><span style='background: #AEF1AE'>&quot;python &quot; + path</span><span style=''>
+</span>9 <span style=''>    </span><span style='background: #AEF1AE'>argv.foreach({ value =&gt;
+</span>10 <span style=''></span><span style='background: #AEF1AE'>      val addition = &quot; &quot; + value
+</span>11 <span style=''></span><span style='background: #AEF1AE'>      command += addition
+</span>12 <span style=''></span><span style='background: #AEF1AE'>    })</span><span style=''>
+</span>13 <span style=''>
+</span>14 <span style=''>    val process = </span><span style='background: #AEF1AE'>Process(command).lineStream.toList</span><span style=''>
+</span>15 <span style=''>    if(</span><span style='background: #AEF1AE'>process != Nil</span><span style=''>)</span><span style='background: #AEF1AE'>{
+</span>16 <span style=''></span><span style='background: #AEF1AE'>      process.foreach(println)
+</span>17 <span style=''></span><span style='background: #AEF1AE'>      status = 1
+</span>18 <span style=''></span><span style='background: #AEF1AE'>    }</span><span style=''>else</span><span style='background: #AEF1AE'>{
+</span>19 <span style=''></span><span style='background: #AEF1AE'>      println(&quot;process has no return&quot;)
+</span>20 <span style=''></span><span style='background: #AEF1AE'>      status = 2
+</span>21 <span style=''></span><span style='background: #AEF1AE'>    }</span><span style=''>
+</span>22 <span style=''>  }
+</span>23 <span style=''>}
+</span>24 <span style=''>
+</span>25 <span style=''>object Main{
+</span>26 <span style=''>  def main(args: Array[String]): Unit = {
+</span>27 <span style=''>    val callpy = </span><span style='background: #F0ADAD'>new callPy</span><span style=''>
+</span>28 <span style=''>    </span><span style='background: #F0ADAD'>callpy.callPython(args(0), args.toList.tail)</span><span style=''>
+</span>29 <span style=''>    </span><span style='background: #F0ADAD'>println(callpy.status)</span><span style=''>
+</span>30 <span style=''>  }
+</span>31 <span style=''>}
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          6
+        </td>
+        <td>
+          1
+        </td>
+        <td>
+          73
+          -
+          74
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          0
+        </td>
+      </tr><tr>
+        <td>
+          8
+        </td>
+        <td>
+          2
+        </td>
+        <td>
+          159
+          -
+          175
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.String.+
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;python &quot;.+(path)
+        </td>
+      </tr><tr>
+        <td>
+          9
+        </td>
+        <td>
+          5
+        </td>
+        <td>
+          180
+          -
+          269
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.immutable.List.foreach
+        </td>
+        <td style="background: #AEF1AE">
+          argv.foreach[Unit](((value: String) =&gt; {
+  val addition: String = &quot; &quot;.+(value);
+  command = command.+(addition)
+}))
+        </td>
+      </tr><tr>
+        <td>
+          10
+        </td>
+        <td>
+          3
+        </td>
+        <td>
+          225
+          -
+          236
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.String.+
+        </td>
+        <td style="background: #AEF1AE">
+          &quot; &quot;.+(value)
+        </td>
+      </tr><tr>
+        <td>
+          11
+        </td>
+        <td>
+          4
+        </td>
+        <td>
+          243
+          -
+          262
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.String.+
+        </td>
+        <td style="background: #AEF1AE">
+          command.+(addition)
+        </td>
+      </tr><tr>
+        <td>
+          14
+        </td>
+        <td>
+          6
+        </td>
+        <td>
+          289
+          -
+          323
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.collection.IterableOnceOps.toList
+        </td>
+        <td style="background: #AEF1AE">
+          scala.sys.process.Process.apply(command).lineStream.toList
+        </td>
+      </tr><tr>
+        <td>
+          15
+        </td>
+        <td>
+          8
+        </td>
+        <td>
+          331
+          -
+          345
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.Object.!=
+        </td>
+        <td style="background: #AEF1AE">
+          process.!=(scala.collection.immutable.Nil)
+        </td>
+      </tr><tr>
+        <td>
+          15
+        </td>
+        <td>
+          7
+        </td>
+        <td>
+          342
+          -
+          345
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.collection.immutable.Nil
+        </td>
+        <td style="background: #AEF1AE">
+          scala.collection.immutable.Nil
+        </td>
+      </tr><tr>
+        <td>
+          15
+        </td>
+        <td>
+          12
+        </td>
+        <td>
+          346
+          -
+          401
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          {
+  process.foreach[Unit](((x: Any) =&gt; scala.Predef.println(x)));
+  callPy.this.status_=(1)
+}
+        </td>
+      </tr><tr>
+        <td>
+          16
+        </td>
+        <td>
+          10
+        </td>
+        <td>
+          354
+          -
+          378
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.immutable.List.foreach
+        </td>
+        <td style="background: #AEF1AE">
+          process.foreach[Unit](((x: Any) =&gt; scala.Predef.println(x)))
+        </td>
+      </tr><tr>
+        <td>
+          16
+        </td>
+        <td>
+          9
+        </td>
+        <td>
+          370
+          -
+          377
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.println
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.println(x)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          11
+        </td>
+        <td>
+          385
+          -
+          395
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          callpy.callPy.status_=
+        </td>
+        <td style="background: #AEF1AE">
+          callPy.this.status_=(1)
+        </td>
+      </tr><tr>
+        <td>
+          18
+        </td>
+        <td>
+          15
+        </td>
+        <td>
+          405
+          -
+          468
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          {
+  scala.Predef.println(&quot;process has no return&quot;);
+  callPy.this.status_=(2)
+}
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          13
+        </td>
+        <td>
+          413
+          -
+          445
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.println
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.println(&quot;process has no return&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          20
+        </td>
+        <td>
+          14
+        </td>
+        <td>
+          452
+          -
+          462
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          callpy.callPy.status_=
+        </td>
+        <td style="background: #AEF1AE">
+          callPy.this.status_=(2)
+        </td>
+      </tr><tr>
+        <td>
+          27
+        </td>
+        <td>
+          16
+        </td>
+        <td>
+          548
+          -
+          558
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          callpy.callPy.&lt;init&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          new callPy()
+        </td>
+      </tr><tr>
+        <td>
+          28
+        </td>
+        <td>
+          17
+        </td>
+        <td>
+          581
+          -
+          588
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Array.apply
+        </td>
+        <td style="background: #F0ADAD">
+          args.apply(0)
+        </td>
+      </tr><tr>
+        <td>
+          28
+        </td>
+        <td>
+          19
+        </td>
+        <td>
+          563
+          -
+          607
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          callpy.callPy.callPython
+        </td>
+        <td style="background: #F0ADAD">
+          callpy.callPython(args.apply(0), scala.Predef.wrapRefArray[String](args).toList.tail)
+        </td>
+      </tr><tr>
+        <td>
+          28
+        </td>
+        <td>
+          18
+        </td>
+        <td>
+          590
+          -
+          606
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.collection.IterableOps.tail
+        </td>
+        <td style="background: #F0ADAD">
+          scala.Predef.wrapRefArray[String](args).toList.tail
+        </td>
+      </tr><tr>
+        <td>
+          29
+        </td>
+        <td>
+          20
+        </td>
+        <td>
+          620
+          -
+          633
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          callpy.callPy.status
+        </td>
+        <td style="background: #F0ADAD">
+          callpy.status
+        </td>
+      </tr><tr>
+        <td>
+          29
+        </td>
+        <td>
+          21
+        </td>
+        <td>
+          612
+          -
+          634
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.println
+        </td>
+        <td style="background: #F0ADAD">
+          scala.Predef.println(callpy.status)
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>
