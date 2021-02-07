@@ -1,0 +1,7 @@
+[0m[[0m[0minfo[0m] [0m[0mCleaning datadir [/development/scala-server/target/scala-2.13/scoverage-data][0m
+[0m[[0m[0minfo[0m] [0m[0mBeginning coverage instrumentation[0m
+[0m[[0m[0minfo[0m] [0m[0mInstrumentation completed [25 statements][0m
+[0m[[0m[0minfo[0m] [0m[0mWrote instrumentation file [/development/scala-server/target/scala-2.13/scoverage-data/scoverage.coverage][0m
+[0m[[0m[0minfo[0m] [0m[0mWill write measurement data to [/development/scala-server/target/scala-2.13/scoverage-data][0m
+[0m[[0m[33mwarn[0m] [0m[0mthere was one deprecation warning (since 2.13.0); re-run with -deprecation for details[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
