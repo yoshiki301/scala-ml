@@ -25,15 +25,15 @@ callPy
 Class
 callpy.callPy
 <none>
-73
-74
+70
+99
 6
-<nosymbol>
-Literal
+scala.collection.IterableFactory.apply
+Apply
 false
 0
 false
-0
+scala.collection.immutable.List.apply[String]("process has no return")
 
 2
 /development/scala-server/src/main/scala/callPy.scala
@@ -42,8 +42,8 @@ callPy
 Class
 callpy.callPy
 callPython
-159
-175
+193
+209
 8
 java.lang.String.+
 Apply
@@ -59,8 +59,8 @@ callPy
 Class
 callpy.callPy
 callPython
-225
-236
+259
+270
 10
 java.lang.String.+
 Apply
@@ -76,8 +76,8 @@ callPy
 Class
 callpy.callPy
 callPython
-243
-262
+277
+296
 11
 java.lang.String.+
 Apply
@@ -93,8 +93,8 @@ callPy
 Class
 callpy.callPy
 callPython
-180
-269
+214
+303
 9
 scala.collection.immutable.List.foreach
 Apply
@@ -113,8 +113,8 @@ callPy
 Class
 callpy.callPy
 callPython
-289
 323
+357
 14
 scala.collection.IterableOnceOps.toList
 Select
@@ -130,8 +130,8 @@ callPy
 Class
 callpy.callPy
 callPython
-342
-345
+376
+379
 15
 scala.collection.immutable.Nil
 Select
@@ -147,15 +147,15 @@ callPy
 Class
 callpy.callPy
 callPython
-331
-345
+394
+406
 15
-java.lang.Object.!=
+scala.collection.IterableFactory.apply
 Apply
 false
 0
 false
-process.!=(scala.collection.immutable.Nil)
+scala.collection.immutable.List.apply[String]("None")
 
 9
 /development/scala-server/src/main/scala/callPy.scala
@@ -164,15 +164,15 @@ callPy
 Class
 callpy.callPy
 callPython
-370
-377
-16
-scala.Predef.println
+383
+406
+15
+java.lang.Object.!=
 Apply
 false
 0
 false
-scala.Predef.println(x)
+process.!=(scala.collection.immutable.List.apply[String]("None"))
 
 10
 /development/scala-server/src/main/scala/callPy.scala
@@ -181,15 +181,15 @@ callPy
 Class
 callpy.callPy
 callPython
-354
-378
-16
-scala.collection.immutable.List.foreach
+365
+406
+15
+scala.Boolean.&&
 Apply
 false
 0
 false
-process.foreach[Unit](((x: Any) => scala.Predef.println(x)))
+process.!=(scala.collection.immutable.Nil).&&(process.!=(scala.collection.immutable.List.apply[String]("None")))
 
 11
 /development/scala-server/src/main/scala/callPy.scala
@@ -198,15 +198,15 @@ callPy
 Class
 callpy.callPy
 callPython
-385
-395
-17
-callpy.callPy.status_=
-Apply
+421
+424
+16
+scala.collection.immutable.Nil
+Select
 false
 0
 false
-callPy.this.status_=(1)
+scala.collection.immutable.Nil
 
 12
 /development/scala-server/src/main/scala/callPy.scala
@@ -215,18 +215,15 @@ callPy
 Class
 callpy.callPy
 callPython
-346
-401
-15
-<nosymbol>
-Block
-true
+415
+424
+16
+callpy.callPy.res_=
+Apply
+false
 0
 false
-{
-  process.foreach[Unit](((x: Any) => scala.Predef.println(x)));
-  callPy.this.status_=(1)
-}
+callPy.this.res_=(scala.collection.immutable.Nil)
 
 13
 /development/scala-server/src/main/scala/callPy.scala
@@ -235,15 +232,15 @@ callPy
 Class
 callpy.callPy
 callPython
-413
-445
-19
-scala.Predef.println
+474
+480
+18
+scala.collection.immutable.List.::
 Apply
 false
 0
 false
-scala.Predef.println("process has no return")
+callPy.this.res.::[String](rassoc$1)
 
 14
 /development/scala-server/src/main/scala/callPy.scala
@@ -252,15 +249,18 @@ callPy
 Class
 callpy.callPy
 callPython
-452
-462
-20
-callpy.callPy.status_=
+464
+480
+18
+callpy.callPy.res_=
 Apply
 false
 0
 false
-callPy.this.status_=(2)
+callPy.this.res_=({
+  final <synthetic> <artifact> val rassoc$1: String = str;
+  callPy.this.res.::[String](rassoc$1)
+})
 
 15
 /development/scala-server/src/main/scala/callPy.scala
@@ -269,103 +269,110 @@ callPy
 Class
 callpy.callPy
 callPython
-405
-468
-18
+431
+489
+17
+scala.collection.immutable.List.foreach
+Apply
+false
+0
+false
+process.foreach[Unit](((str: String) => callPy.this.res_=({
+  final <synthetic> <artifact> val rassoc$1: String = str;
+  callPy.this.res.::[String](rassoc$1)
+})))
+
+16
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+496
+507
+20
+scala.collection.immutable.List.reverse
+Select
+false
+0
+false
+callPy.this.res.reverse
+
+17
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+callPy
+Class
+callpy.callPy
+callPython
+407
+513
+15
 <nosymbol>
 Block
 true
 0
 false
 {
-  scala.Predef.println("process has no return");
-  callPy.this.status_=(2)
+  callPy.this.res_=(scala.collection.immutable.Nil);
+  process.foreach[Unit](((str: String) => callPy.this.res_=({
+    final <synthetic> <artifact> val rassoc$1: String = str;
+    callPy.this.res.::[String](rassoc$1)
+  })));
+  callPy.this.res.reverse
 }
-
-16
-/development/scala-server/src/main/scala/callPy.scala
-callpy
-Main
-Object
-callpy.Main
-main
-548
-558
-27
-callpy.callPy.<init>
-Apply
-false
-0
-false
-new callPy()
-
-17
-/development/scala-server/src/main/scala/callPy.scala
-callpy
-Main
-Object
-callpy.Main
-main
-581
-588
-28
-scala.Array.apply
-Apply
-false
-0
-false
-args.apply(0)
 
 18
 /development/scala-server/src/main/scala/callPy.scala
 callpy
-Main
-Object
-callpy.Main
-main
-590
-606
-28
-scala.collection.IterableOps.tail
-Select
+callPy
+Class
+callpy.callPy
+callPython
+362
+362
+15
+<nosymbol>
+Literal
 false
 0
 false
-scala.Predef.wrapRefArray[String](args).toList.tail
+()
 
 19
 /development/scala-server/src/main/scala/callPy.scala
 callpy
-Main
-Object
-callpy.Main
-main
-563
-607
-28
-callpy.callPy.callPython
-Apply
-false
+callPy
+Class
+callpy.callPy
+callPython
+362
+362
+15
+<nosymbol>
+Block
+true
 0
 false
-callpy.callPython(args.apply(0), scala.Predef.wrapRefArray[String](args).toList.tail)
+()
 
 20
 /development/scala-server/src/main/scala/callPy.scala
 callpy
-Main
-Object
-callpy.Main
-main
-620
-633
-29
-callpy.callPy.status
+callPy
+Class
+callpy.callPy
+callPython
+518
+521
+22
+callpy.callPy.res
 Select
 false
 0
 false
-callpy.status
+callPy.this.res
 
 21
 /development/scala-server/src/main/scala/callPy.scala
@@ -374,13 +381,81 @@ Main
 Object
 callpy.Main
 main
-612
-634
+601
+611
+28
+callpy.callPy.<init>
+Apply
+false
+0
+false
+new callPy()
+
+22
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+Main
+Object
+callpy.Main
+main
+644
+651
 29
+scala.Array.apply
+Apply
+false
+0
+false
+args.apply(0)
+
+23
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+Main
+Object
+callpy.Main
+main
+653
+669
+29
+scala.collection.IterableOps.tail
+Select
+false
+0
+false
+scala.Predef.wrapRefArray[String](args).toList.tail
+
+24
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+Main
+Object
+callpy.Main
+main
+626
+670
+29
+callpy.callPy.callPython
+Apply
+false
+0
+false
+callpy.callPython(args.apply(0), scala.Predef.wrapRefArray[String](args).toList.tail)
+
+25
+/development/scala-server/src/main/scala/callPy.scala
+callpy
+Main
+Object
+callpy.Main
+main
+675
+687
+30
 scala.Predef.println
 Apply
 false
 0
 false
-scala.Predef.println(callpy.status)
+scala.Predef.println(res)
 

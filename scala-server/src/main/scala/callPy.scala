@@ -3,8 +3,8 @@ package callpy
 import scala.sys.process._
 
 class callPy{
-  var status = 0
-  def callPython(path: String, argv: List[String] = Nil): Unit ={
+  var res = List("process has no return")
+  def callPython(path: String, argv: List[String] = Nil): List[String] = {
     var command = "python " + path
     argv.foreach({ value =>
       val addition = " " + value
@@ -12,20 +12,21 @@ class callPy{
     })
 
     val process = Process(command).lineStream.toList
-    if(process != Nil){
-      process.foreach(println)
-      status = 1
-    }else{
-      println("process has no return")
-      status = 2
+    if(process != Nil && process != List("None")){
+      res = Nil
+      process.foreach({ str =>
+        res = str :: res
+      })
+      res.reverse
     }
+    res
   }
 }
 
 object Main{
   def main(args: Array[String]): Unit = {
     val callpy = new callPy
-    callpy.callPython(args(0), args.toList.tail)
-    println(callpy.status)
+    val res = callpy.callPython(args(0), args.toList.tail)
+    println(res)
   }
 }

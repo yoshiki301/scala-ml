@@ -5,7 +5,7 @@
 [0m[[0m[0minfo[0m] [0m[0mWritten Cobertura report [/development/scala-server/target/scala-2.13/coverage-report/cobertura.xml][0m
 [0m[[0m[0minfo[0m] [0m[0mWritten XML coverage report [/development/scala-server/target/scala-2.13/scoverage-report/scoverage.xml][0m
 [0m[[0m[0minfo[0m] [0m[0mWritten HTML coverage report [/development/scala-server/target/scala-2.13/scoverage-report/index.html][0m
-[0m[[0m[0minfo[0m] [0m[0mStatement coverage.: 71.43%[0m
+[0m[[0m[0minfo[0m] [0m[0mStatement coverage.: 80.00%[0m
 [0m[[0m[0minfo[0m] [0m[0mBranch coverage....: 100.00%[0m
 [0m[[0m[0minfo[0m] [0m[0mCoverage reports completed[0m
-[0m[[0m[0minfo[0m] [0m[0mAll done. Coverage was [71.43%][0m
+[0m[[0m[0minfo[0m] [0m[0mAll done. Coverage was [80.00%][0m

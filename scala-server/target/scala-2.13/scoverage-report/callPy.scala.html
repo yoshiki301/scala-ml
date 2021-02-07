@@ -27,8 +27,8 @@
 </span>3 <span style=''>import scala.sys.process._
 </span>4 <span style=''>
 </span>5 <span style=''>class callPy{
-</span>6 <span style=''>  var status = </span><span style='background: #AEF1AE'>0</span><span style=''>
-</span>7 <span style=''>  def callPython(path: String, argv: List[String] = Nil): Unit ={
+</span>6 <span style=''>  var res = </span><span style='background: #AEF1AE'>List(&quot;process has no return&quot;)</span><span style=''>
+</span>7 <span style=''>  def callPython(path: String, argv: List[String] = Nil): List[String] = {
 </span>8 <span style=''>    var command = </span><span style='background: #AEF1AE'>&quot;python &quot; + path</span><span style=''>
 </span>9 <span style=''>    </span><span style='background: #AEF1AE'>argv.foreach({ value =&gt;
 </span>10 <span style=''></span><span style='background: #AEF1AE'>      val addition = &quot; &quot; + value
@@ -36,23 +36,24 @@
 </span>12 <span style=''></span><span style='background: #AEF1AE'>    })</span><span style=''>
 </span>13 <span style=''>
 </span>14 <span style=''>    val process = </span><span style='background: #AEF1AE'>Process(command).lineStream.toList</span><span style=''>
-</span>15 <span style=''>    if(</span><span style='background: #AEF1AE'>process != Nil</span><span style=''>)</span><span style='background: #AEF1AE'>{
-</span>16 <span style=''></span><span style='background: #AEF1AE'>      process.foreach(println)
-</span>17 <span style=''></span><span style='background: #AEF1AE'>      status = 1
-</span>18 <span style=''></span><span style='background: #AEF1AE'>    }</span><span style=''>else</span><span style='background: #AEF1AE'>{
-</span>19 <span style=''></span><span style='background: #AEF1AE'>      println(&quot;process has no return&quot;)
-</span>20 <span style=''></span><span style='background: #AEF1AE'>      status = 2
+</span>15 <span style=''>    if(</span><span style='background: #AEF1AE'>process != Nil &amp;&amp; process != List(&quot;None&quot;)</span><span style=''>)</span><span style='background: #AEF1AE'>{
+</span>16 <span style=''></span><span style='background: #AEF1AE'>      res = Nil
+</span>17 <span style=''></span><span style='background: #AEF1AE'>      process.foreach({ str =&gt;
+</span>18 <span style=''></span><span style='background: #AEF1AE'>        res = str :: res
+</span>19 <span style=''></span><span style='background: #AEF1AE'>      })
+</span>20 <span style=''></span><span style='background: #AEF1AE'>      res.reverse
 </span>21 <span style=''></span><span style='background: #AEF1AE'>    }</span><span style=''>
-</span>22 <span style=''>  }
-</span>23 <span style=''>}
-</span>24 <span style=''>
-</span>25 <span style=''>object Main{
-</span>26 <span style=''>  def main(args: Array[String]): Unit = {
-</span>27 <span style=''>    val callpy = </span><span style='background: #F0ADAD'>new callPy</span><span style=''>
-</span>28 <span style=''>    </span><span style='background: #F0ADAD'>callpy.callPython(args(0), args.toList.tail)</span><span style=''>
-</span>29 <span style=''>    </span><span style='background: #F0ADAD'>println(callpy.status)</span><span style=''>
-</span>30 <span style=''>  }
-</span>31 <span style=''>}
+</span>22 <span style=''>    </span><span style='background: #AEF1AE'>res</span><span style=''>
+</span>23 <span style=''>  }
+</span>24 <span style=''>}
+</span>25 <span style=''>
+</span>26 <span style=''>object Main{
+</span>27 <span style=''>  def main(args: Array[String]): Unit = {
+</span>28 <span style=''>    val callpy = </span><span style='background: #F0ADAD'>new callPy</span><span style=''>
+</span>29 <span style=''>    val res = </span><span style='background: #F0ADAD'>callpy.callPython(args(0), args.toList.tail)</span><span style=''>
+</span>30 <span style=''>    </span><span style='background: #F0ADAD'>println(res)</span><span style=''>
+</span>31 <span style=''>  }
+</span>32 <span style=''>}
 </span></pre>
           </div>
           <div class="tab-pane" id="statementlist">
@@ -72,18 +73,18 @@
           1
         </td>
         <td>
-          73
+          70
           -
-          74
+          99
         </td>
         <td>
-          Literal
+          Apply
         </td>
         <td>
-          &lt;nosymbol&gt;
+          scala.collection.IterableFactory.apply
         </td>
         <td style="background: #AEF1AE">
-          0
+          scala.collection.immutable.List.apply[String](&quot;process has no return&quot;)
         </td>
       </tr><tr>
         <td>
@@ -93,9 +94,9 @@
           2
         </td>
         <td>
-          159
+          193
           -
-          175
+          209
         </td>
         <td>
           Apply
@@ -114,9 +115,9 @@
           5
         </td>
         <td>
-          180
+          214
           -
-          269
+          303
         </td>
         <td>
           Apply
@@ -138,9 +139,9 @@
           3
         </td>
         <td>
-          225
+          259
           -
-          236
+          270
         </td>
         <td>
           Apply
@@ -159,9 +160,9 @@
           4
         </td>
         <td>
-          243
+          277
           -
-          262
+          296
         </td>
         <td>
           Apply
@@ -180,9 +181,9 @@
           6
         </td>
         <td>
-          289
-          -
           323
+          -
+          357
         </td>
         <td>
           Select
@@ -201,18 +202,46 @@
           8
         </td>
         <td>
-          331
+          394
           -
-          345
+          406
         </td>
         <td>
           Apply
         </td>
         <td>
-          java.lang.Object.!=
+          scala.collection.IterableFactory.apply
         </td>
         <td style="background: #AEF1AE">
-          process.!=(scala.collection.immutable.Nil)
+          scala.collection.immutable.List.apply[String](&quot;None&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          15
+        </td>
+        <td>
+          17
+        </td>
+        <td>
+          407
+          -
+          513
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          {
+  callPy.this.res_=(scala.collection.immutable.Nil);
+  process.foreach[Unit](((str: String) =&gt; callPy.this.res_=({
+    final &lt;synthetic&gt; &lt;artifact&gt; val rassoc$1: String = str;
+    callPy.this.res.::[String](rassoc$1)
+  })));
+  callPy.this.res.reverse
+}
         </td>
       </tr><tr>
         <td>
@@ -222,9 +251,9 @@
           7
         </td>
         <td>
-          342
+          376
           -
-          345
+          379
         </td>
         <td>
           Select
@@ -240,12 +269,33 @@
           15
         </td>
         <td>
-          12
+          10
         </td>
         <td>
-          346
+          365
           -
-          401
+          406
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Boolean.&amp;&amp;
+        </td>
+        <td style="background: #AEF1AE">
+          process.!=(scala.collection.immutable.Nil).&amp;&amp;(process.!=(scala.collection.immutable.List.apply[String](&quot;None&quot;)))
+        </td>
+      </tr><tr>
+        <td>
+          15
+        </td>
+        <td>
+          19
+        </td>
+        <td>
+          362
+          -
+          362
         </td>
         <td>
           Block
@@ -254,22 +304,103 @@
           &lt;nosymbol&gt;
         </td>
         <td style="background: #AEF1AE">
-          {
-  process.foreach[Unit](((x: Any) =&gt; scala.Predef.println(x)));
-  callPy.this.status_=(1)
-}
+          ()
+        </td>
+      </tr><tr>
+        <td>
+          15
+        </td>
+        <td>
+          9
+        </td>
+        <td>
+          383
+          -
+          406
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.Object.!=
+        </td>
+        <td style="background: #AEF1AE">
+          process.!=(scala.collection.immutable.List.apply[String](&quot;None&quot;))
+        </td>
+      </tr><tr>
+        <td>
+          15
+        </td>
+        <td>
+          18
+        </td>
+        <td>
+          362
+          -
+          362
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ()
         </td>
       </tr><tr>
         <td>
           16
         </td>
         <td>
-          10
+          11
         </td>
         <td>
-          354
+          421
           -
-          378
+          424
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.collection.immutable.Nil
+        </td>
+        <td style="background: #AEF1AE">
+          scala.collection.immutable.Nil
+        </td>
+      </tr><tr>
+        <td>
+          16
+        </td>
+        <td>
+          12
+        </td>
+        <td>
+          415
+          -
+          424
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          callpy.callPy.res_=
+        </td>
+        <td style="background: #AEF1AE">
+          callPy.this.res_=(scala.collection.immutable.Nil)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          15
+        </td>
+        <td>
+          431
+          -
+          489
         </td>
         <td>
           Apply
@@ -278,127 +409,109 @@
           scala.collection.immutable.List.foreach
         </td>
         <td style="background: #AEF1AE">
-          process.foreach[Unit](((x: Any) =&gt; scala.Predef.println(x)))
-        </td>
-      </tr><tr>
-        <td>
-          16
-        </td>
-        <td>
-          9
-        </td>
-        <td>
-          370
-          -
-          377
-        </td>
-        <td>
-          Apply
-        </td>
-        <td>
-          scala.Predef.println
-        </td>
-        <td style="background: #AEF1AE">
-          scala.Predef.println(x)
-        </td>
-      </tr><tr>
-        <td>
-          17
-        </td>
-        <td>
-          11
-        </td>
-        <td>
-          385
-          -
-          395
-        </td>
-        <td>
-          Apply
-        </td>
-        <td>
-          callpy.callPy.status_=
-        </td>
-        <td style="background: #AEF1AE">
-          callPy.this.status_=(1)
+          process.foreach[Unit](((str: String) =&gt; callPy.this.res_=({
+  final &lt;synthetic&gt; &lt;artifact&gt; val rassoc$1: String = str;
+  callPy.this.res.::[String](rassoc$1)
+})))
         </td>
       </tr><tr>
         <td>
           18
         </td>
         <td>
-          15
+          14
         </td>
         <td>
-          405
+          464
           -
-          468
-        </td>
-        <td>
-          Block
-        </td>
-        <td>
-          &lt;nosymbol&gt;
-        </td>
-        <td style="background: #AEF1AE">
-          {
-  scala.Predef.println(&quot;process has no return&quot;);
-  callPy.this.status_=(2)
-}
-        </td>
-      </tr><tr>
-        <td>
-          19
-        </td>
-        <td>
-          13
-        </td>
-        <td>
-          413
-          -
-          445
+          480
         </td>
         <td>
           Apply
         </td>
         <td>
-          scala.Predef.println
+          callpy.callPy.res_=
         </td>
         <td style="background: #AEF1AE">
-          scala.Predef.println(&quot;process has no return&quot;)
+          callPy.this.res_=({
+  final &lt;synthetic&gt; &lt;artifact&gt; val rassoc$1: String = str;
+  callPy.this.res.::[String](rassoc$1)
+})
+        </td>
+      </tr><tr>
+        <td>
+          18
+        </td>
+        <td>
+          13
+        </td>
+        <td>
+          474
+          -
+          480
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.collection.immutable.List.::
+        </td>
+        <td style="background: #AEF1AE">
+          callPy.this.res.::[String](rassoc$1)
         </td>
       </tr><tr>
         <td>
           20
         </td>
         <td>
-          14
-        </td>
-        <td>
-          452
-          -
-          462
-        </td>
-        <td>
-          Apply
-        </td>
-        <td>
-          callpy.callPy.status_=
-        </td>
-        <td style="background: #AEF1AE">
-          callPy.this.status_=(2)
-        </td>
-      </tr><tr>
-        <td>
-          27
-        </td>
-        <td>
           16
         </td>
         <td>
-          548
+          496
           -
-          558
+          507
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.collection.immutable.List.reverse
+        </td>
+        <td style="background: #AEF1AE">
+          callPy.this.res.reverse
+        </td>
+      </tr><tr>
+        <td>
+          22
+        </td>
+        <td>
+          20
+        </td>
+        <td>
+          518
+          -
+          521
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          callpy.callPy.res
+        </td>
+        <td style="background: #AEF1AE">
+          callPy.this.res
+        </td>
+      </tr><tr>
+        <td>
+          28
+        </td>
+        <td>
+          21
+        </td>
+        <td>
+          601
+          -
+          611
         </td>
         <td>
           Apply
@@ -411,57 +524,15 @@
         </td>
       </tr><tr>
         <td>
-          28
+          29
         </td>
         <td>
-          17
+          23
         </td>
         <td>
-          581
+          653
           -
-          588
-        </td>
-        <td>
-          Apply
-        </td>
-        <td>
-          scala.Array.apply
-        </td>
-        <td style="background: #F0ADAD">
-          args.apply(0)
-        </td>
-      </tr><tr>
-        <td>
-          28
-        </td>
-        <td>
-          19
-        </td>
-        <td>
-          563
-          -
-          607
-        </td>
-        <td>
-          Apply
-        </td>
-        <td>
-          callpy.callPy.callPython
-        </td>
-        <td style="background: #F0ADAD">
-          callpy.callPython(args.apply(0), scala.Predef.wrapRefArray[String](args).toList.tail)
-        </td>
-      </tr><tr>
-        <td>
-          28
-        </td>
-        <td>
-          18
-        </td>
-        <td>
-          590
-          -
-          606
+          669
         </td>
         <td>
           Select
@@ -477,33 +548,54 @@
           29
         </td>
         <td>
-          20
+          22
         </td>
         <td>
-          620
+          644
           -
-          633
+          651
         </td>
         <td>
-          Select
+          Apply
         </td>
         <td>
-          callpy.callPy.status
+          scala.Array.apply
         </td>
         <td style="background: #F0ADAD">
-          callpy.status
+          args.apply(0)
         </td>
       </tr><tr>
         <td>
           29
         </td>
         <td>
-          21
+          24
         </td>
         <td>
-          612
+          626
           -
-          634
+          670
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          callpy.callPy.callPython
+        </td>
+        <td style="background: #F0ADAD">
+          callpy.callPython(args.apply(0), scala.Predef.wrapRefArray[String](args).toList.tail)
+        </td>
+      </tr><tr>
+        <td>
+          30
+        </td>
+        <td>
+          25
+        </td>
+        <td>
+          675
+          -
+          687
         </td>
         <td>
           Apply
@@ -512,7 +604,7 @@
           scala.Predef.println
         </td>
         <td style="background: #F0ADAD">
-          scala.Predef.println(callpy.status)
+          scala.Predef.println(res)
         </td>
       </tr>
     </table>
