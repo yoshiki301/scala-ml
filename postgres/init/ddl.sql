@@ -15,5 +15,5 @@ create table params (
     param_id integer not null
     , param_label text
     , param_value numeric
-    , foreign key (param_id) references exec_result(id)
+    , foreign key (param_id) references exec_result(param_id)
 );
