@@ -1,4 +1,4 @@
-package callpy
+package pythonController
 
 import scala.sys.process._
 
@@ -11,7 +11,7 @@ class callPy{
       command += addition
     })
 
-    val process = Process(command).lineStream.toList
+    val process = Process(command).lineStream_!.toList
     if(process != Nil && process != List("None")){
       res = Nil
       process.foreach({ str =>

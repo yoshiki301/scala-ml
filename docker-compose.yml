@@ -6,6 +6,8 @@ services:
     volumes:
       - ./scala-server:/scala-dev
     tty: true
+    networks:
+      - scala-net
 
   db:
     image: postgres:13.1
@@ -21,3 +23,11 @@ services:
     hostname: postgres
     restart: always
     user: root
+    networks:
+      - scala-net
+
+networks:
+  scala-net:
+    driver: bridge
+
+
