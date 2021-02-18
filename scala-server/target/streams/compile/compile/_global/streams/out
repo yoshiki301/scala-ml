@@ -1,0 +1,4 @@
+[0m[[0m[31merror[0m] [0m[0m/scala-dev/src/main/scala/forDB/TableController.scala:10:15: No @StaticDatabaseConfig annotation found in enclosing scope[0m
+[0m[[0m[31merror[0m] [0m[0m  val query = tsql"SELECT id, param_id FROM scala_server.exec_result"[0m
+[0m[[0m[31merror[0m] [0m[0m              ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m
