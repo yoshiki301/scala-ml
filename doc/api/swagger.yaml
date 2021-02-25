@@ -1,0 +1,191 @@
+swagger: "2.0"
+info:
+  description: "scala-mlサーバのAPIです。"
+  version: "1.0.0"
+  title: "scala-ml-server API"
+paths:
+  /execution_result/{result_id}:
+    get:
+      summary: "実行結果情報API"
+      description: "指定されたresult_idの実行結果の情報を返します"
+      parameters:
+      - name: "result_id"
+        in: "path"
+        description: "取得したい実行結果のID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+                format: "int64"
+                example: 5
+              param_id:
+                type: "integer"
+                format: "int64"
+                example: 8
+              execute_filepath:
+                type: "string"
+                example: "./src/main/resources/light-gbm.py"
+              output_dirpath:
+                type: "string"
+                example: "./src/main/resources/output-5"
+              start_timestamp:
+                type: "string"
+                format: "date-time"
+                example: "2021-02-14 14:00:00"
+              end_timestamp:
+                type: "string"
+                format: "date-time"
+                example: "2021-02-14 14:10:00"
+              exit_status:
+                type: "string"
+                example: "success"
+        404:
+          description: "存在しないidの場合のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Not found the specified result_id result."
+  /params/:
+    post:
+      summary: "実行結果格納API"
+      description: "実行結果を格納します"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                d:
+                type: "integer"
+                format: "int64"
+                example: 5
+              param_id:
+                type: "integer"
+                format: "int64"
+                example: 8
+              execute_filepath:
+                type: "string"
+                example: "./src/main/resources/light-gbm.py"
+              output_dirpath:
+                type: "string"
+                example: "./src/main/resources/output-5"
+              start_timestamp:
+                type: "string"
+                format: "date-time"
+                example: "2021-02-14 14:00:00"
+              end_timestamp:
+                type: "string"
+                format: "date-time"
+                example: "2021-02-14 14:10:00"
+              exit_status:
+                type: "string"
+                example: "success"
+      responses:
+        201:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Created exec_result"
+        409:
+          description: "既に同じidがある場合のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              type: "string"
+              example: "Conflict: already existing the same id"
+  /params/{param_id}:
+    get:
+      summary: "パラメータ情報API"
+      description: "指定されたparam_idのパラメータの情報を全て返します"
+      parameters:
+      - name: "param_id"
+        in: "path"
+        description: "取得したいパラメータのID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "array"
+            items:
+              example:
+                - param_id: 8
+                  param_label: "test_size"
+                  param_value: "0.2"
+                - param_id: 8
+                  param_label: "random_state"
+                  param_value: "42"
+                - param_id: 8
+                  param_label: "lgb_params"
+                  param_value: '{
+                    "objective": "regression",
+                    "metric": "rmse",
+                    "num_leaves": 31,
+                    "max_depth": 3,
+                    "verbosity": -1
+                  }'
+        404:
+          description: "存在しないparam_idの場合のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Not found the specified param_id result."
+  /params/:
+    post:
+      summary: "パラメータ格納API"
+      description: "指定されたparam_idのパラメータを格納します"
+      requestBody:
+        content:
+          application/json:
+            schema:
+            type: "array"
+            items:
+              example:
+                - param_id: 8
+                  param_label: "test_size"
+                  param_value: "0.2"
+                - param_id: 8
+                  param_label: "random_state"
+                  param_value: "42"
+                - param_id: 8
+                  param_label: "lgb_params"
+                  param_value: '{
+                    "objective": "regression",
+                    "metric": "rmse",
+                    "num_leaves": 31,
+                    "max_depth": 3,
+                    "verbosity": -1
+                  }'
+      responses:
+        201:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Created params"
+        409:
+          description: "既に同じparam_idがある場合のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              type: "string"
+              example: "Conflict: already existing the same param_id"
+
