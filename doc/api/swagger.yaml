@@ -54,7 +54,7 @@ paths:
               message:
                 type: "string"
                 example: "Not found the specified result_id result."
-  /params/:
+  /execution_result/:
     post:
       summary: "実行結果格納API"
       description: "実行結果を格納します"
@@ -103,8 +103,9 @@ paths:
           schema:
             type: "object"
             properties:
-              type: "string"
-              example: "Conflict: already existing the same id"
+              message:
+                type: "string"
+                example: "Conflict: already existing the same id"
   /params/{param_id}:
     get:
       summary: "パラメータ情報API"
@@ -186,6 +187,7 @@ paths:
           schema:
             type: "object"
             properties:
-              type: "string"
-              example: "Conflict: already existing the same param_id"
+              message:
+                type: "string"
+                example: "Conflict: already existing the same param_id"
 
