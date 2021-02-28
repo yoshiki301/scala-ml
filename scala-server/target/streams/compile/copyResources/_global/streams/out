@@ -1,0 +1,5 @@
+[0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/scala-dev/src/main/resources/hello.py,/scala-dev/target/scala-2.13/classes/hello.py)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/scala-dev/src/main/resources/light-gbm.py,/scala-dev/target/scala-2.13/classes/light-gbm.py)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/scala-dev/src/main/resources/argCatch.py,/scala-dev/target/scala-2.13/classes/argCatch.py)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/scala-dev/src/main/resources/lgb-params.json,/scala-dev/target/scala-2.13/classes/lgb-params.json)[0m
