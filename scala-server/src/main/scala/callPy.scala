@@ -3,8 +3,8 @@ package callpy
 import scala.sys.process._
 
 class callPy{
-  var res = List("process has no return")
   def callPython(path: String, argv: List[String] = Nil): List[String] = {
+    var res = List("process has no return")
     var command = "python " + path
     argv.foreach({ value =>
       val addition = " " + value
