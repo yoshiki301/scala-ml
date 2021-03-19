@@ -1,6 +1,6 @@
 import slick.codegen.SourceCodeGenerator
 
-name := """scala-ml-play-local"""
+name := """postgres"""
 organization := "com.example"
 
 version := "1.0-SNAPSHOT"
@@ -29,7 +29,7 @@ lazy val root = (project in file("."))
         Array(
           "slick.jdbc.PostgresProfile",
           "org.postgresql.Driver",
-          "jdbc:postgresql://localhost:5432/slick_db_development",
+          "jdbc:postgresql://localhost:5432/postgres",
           "app/infrastructure",
           "dto",
           "root",
