@@ -1,11 +1,8 @@
 package controllers
 
 import javax.inject._
-import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.text.ParseException
 
-import play.api._
 import play.api.mvc._
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import play.api.libs.json.{JsObject, Json}
