@@ -75,3 +75,7 @@ insert into "params" values (
     "verbosity": -1
     }'
 );
+
+-- !Downs
+drop table exec_result cascade;
+drop table params cascade;

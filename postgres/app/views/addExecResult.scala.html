@@ -1,0 +1,19 @@
+@(ExecResultForm: Form[controllers.databaseController.createExecResult])(implicit messagesProvider: MessagesProvider,request: RequestHeader)
+@import helper._
+
+@main("ExecResult"){
+    <h1>Add New ExecResult Data</h1>
+    @form(action = routes.databaseController.postExecResult) {
+    @CSRF.formField
+    <fieldset>
+        @inputText(ExecResultForm("id"), '_label -> "id")
+        @inputText(ExecResultForm("param_id"), '_label -> "param_id")
+        @inputText(ExecResultForm("execute_filepath"), '_label -> "execute_filepath")
+        @inputText(ExecResultForm("output_dirpath"), '_label -> "output_dirpath")
+        @inputText(ExecResultForm("start_timestamp"), '_label -> "start_timestamp")
+        @inputText(ExecResultForm("end_timestamp"), '_label -> "end_tiemstamp")
+        @inputText(ExecResultForm("exit_status"), '_label -> "exit_status")
+        <input type="submit" value="create" formmethod="post">
+    </fieldset>
+    }
+}

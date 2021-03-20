@@ -13,10 +13,12 @@ import slick.jdbc.PostgresProfile
 import slick.jdbc.PostgresProfile.api._
 import dto.Tables._
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, cc: ControllerComponents)(implicit ec: ExecutionContext)
-  extends AbstractController(cc) with HasDatabaseConfigProvider[PostgresProfile] {
+  extends AbstractController(cc) with HasDatabaseConfigProvider[PostgresProfile] with play.api.i18n.I18nSupport {
+
+  import databaseController._
 
   def getExecResult(resultId: Int) = Action.async { implicit request =>
     val action = ExecResult.filter(_.id === resultId).result
@@ -47,16 +49,31 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
     }
   }
 
-  //  def postExecResult() = Action.async { implicit request =>
-  //
-  //    val action = ExecResult += ExecResultRow(id, paramId, executeFilepath, outputDirpath, startTimestamp, endTimestamp, exitStatus)
-  //
-  //    db.run(action).map(
-  //      tuple => Ok("Created exec_result")
-  //    ).recover{
-  //      case exception: Exception => InternalServerError(exception.getMessage)
-  //    }
-  //  }
+  def addExecResult() = Action{ implicit request =>
+    Ok(views.html.addExecResult(ExecResultForm))
+  }
+
+  def postExecResult() = Action.async { implicit request =>
+
+    ExecResultForm.bindFromRequest.fold(
+      error => {
+        Future {
+          Conflict(Json.obj(
+            "message" -> "Conflict: already existing the same id"
+          ))
+        }
+      },
+      form => {
+        val action = ExecResult += ExecResultRow(form.id, form.paramId, form.executeFilepath, form.outputDirpath, form.startTimestamp, form.endTimestamp, form.exitStatus)
+        db.run(action)
+          .map { _ =>
+            Ok(Json.obj(
+              "message" -> "Created exec_result"
+            ))
+        }
+      }
+    )
+  }
 
   def getParams(paramId: Int) = Action.async { implicit request =>
     val action = Params.filter(_.paramId === paramId).result
@@ -88,19 +105,16 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
   }
 }
 
-//object databaseController{
-//
-//  case class ExecResultForm(id: Int, paramId: Int, executeFilepath: Option[String], outputDirpath: Option[String], startTimestamp: Option[Timestamp], endTimestamp: Option[Timestamp], exitStatus: Option[String])
-//
-//  val execResultForm: Form[ExecResultForm] = Form(
-//    mapping(
-//      "id" -> number,
-//      "paramId" -> number,
-//      "executeFilepath" -> optional(text),
-//      "outputDirpath" -> optional(text),
-//      "startTimestamp" -> optional(sqlTimestamp),
-//      "endTimestamp" -> optional(sqlTimestamp),
-//      "exitStatus" -> optional(text)
-//    )(ExecResultForm.apply)(ExecResultForm.unapply)
-//  )
-//}
+object databaseController{
+  case class createExecResult(id: Int, paramId: Int, executeFilepath: Option[String], outputDirpath: Option[String], startTimestamp: Option[Timestamp], endTimestamp: Option[Timestamp], exitStatus: Option[String])
+
+  implicit val ExecResultForm: Form[createExecResult] = Form(
+    mapping(
+      "id" -> number,
+      "param_id" -> number,
+      "execute_filepath" -> optional(text),
+      "output_dirpath" -> optional(text),
+      "start_timestamp" -> optional(sqlTimestamp), "end_timestamp" -> optional(sqlTimestamp), "exit_status" -> optional(text)
+    )(createExecResult.apply)(createExecResult.unapply)
+  )
+}
