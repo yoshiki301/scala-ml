@@ -13,7 +13,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick" % "5.0.0",
   "com.typesafe.play" %% "play-slick-evolutions" % "5.0.0",
   "com.typesafe.slick" %% "slick-codegen" % "3.3.3",
-  "org.postgresql" % "postgresql" % "42.2.19"
+  "org.postgresql" % "postgresql" % "42.2.19",
+  "com.github.tminglei" %% "slick-pg" % "0.19.5"
 )
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
