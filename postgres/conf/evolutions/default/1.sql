@@ -1,7 +1,5 @@
 -- !Ups
 
-create type exit_status_text as enum ('success', 'failure');
-
 create table "exec_result" (
     "id" integer not null
     , "param_id" integer not null unique
@@ -9,7 +7,7 @@ create table "exec_result" (
     , "output_dirpath" text
     , "start_timestamp" timestamp
     , "end_timestamp" timestamp
-    , "exit_status" exit_status_text
+    , "is_succeed" boolean
     , primary key (id)
 );
 
@@ -20,7 +18,7 @@ insert into "exec_result" values (
     , './src/main/resources/output-5'
     , '2021-02-14 14:00:00'
     , '2021-02-14 14:10:00'
-    , 'success'
+    , 'true'
 ), (
     6
     , 9
@@ -28,7 +26,7 @@ insert into "exec_result" values (
     , './src/main/resources/output-6'
     , '2021-02-18 14:00:00'
     , '2021-02-18 14:10:00'
-    , 'success'
+    , 'true'
 );
 
 create table "params" (

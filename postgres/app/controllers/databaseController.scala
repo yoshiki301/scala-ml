@@ -2,7 +2,6 @@ package controllers
 
 import javax.inject._
 import java.text.SimpleDateFormat
-import java.sql.Timestamp
 
 import play.api.mvc._
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
@@ -14,6 +13,7 @@ import slick.jdbc.PostgresProfile.api._
 import dto.Tables._
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success}
 
 class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, cc: ControllerComponents)(implicit ec: ExecutionContext)
   extends AbstractController(cc) with HasDatabaseConfigProvider[PostgresProfile] with play.api.i18n.I18nSupport {
@@ -36,7 +36,7 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
               "output_dirpath" -> item.head.outputDirpath,
               "start_timestamp" -> sdf.format(item.head.startTimestamp.get.getTime),
               "end_timestamp" -> sdf.format(item.head.endTimestamp.get.getTime),
-              "exit_status" -> item.head.exitStatus
+              "is_succeed" -> item.head.isSucceed
             )
           )
         }
@@ -54,22 +54,38 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
   }
 
   def postExecResult() = Action.async { implicit request =>
-
-    ExecResultForm.bindFromRequest.fold(
+    ExecResultForm.bindFromRequest.fold (
       error => {
-        Future {
-          Conflict(Json.obj(
-            "message" -> "Conflict: already existing the same id"
-          ))
+        Future{
+          BadRequest(s"${error}")
         }
       },
       form => {
-        val action = ExecResult += ExecResultRow(form.id, form.paramId, form.executeFilepath, form.outputDirpath, form.startTimestamp, form.endTimestamp, form.exitStatus)
-        db.run(action)
-          .map { _ =>
+        val action = ExecResult.filter(_.id === form.id).exists.result.flatMap {
+          case false => ExecResult += ExecResultRow(form.id, form.paramId, form.executeFilepath, form.outputDirpath, form.startTimestamp, form.endTimestamp, form.isSucceed)
+          case true => DBIO.failed(new Exception)
+        }
+
+        var sessionFlag = false
+        val session = db.run(action)
+
+        session onComplete {
+          case Success(s) => sessionFlag = true
+          case Failure(f) => sessionFlag = false
+        }
+
+        if (sessionFlag) {
+          Future {
             Ok(Json.obj(
               "message" -> "Created exec_result"
             ))
+          }
+        } else {
+          Future {
+            Conflict(Json.obj(
+              "message" -> "Conflict: already existing the same id"
+            ))
+          }
         }
       }
     )
@@ -106,15 +122,16 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
 }
 
 object databaseController{
-  case class createExecResult(id: Int, paramId: Int, executeFilepath: Option[String], outputDirpath: Option[String], startTimestamp: Option[Timestamp], endTimestamp: Option[Timestamp], exitStatus: Option[String])
 
-  implicit val ExecResultForm: Form[createExecResult] = Form(
+  implicit val ExecResultForm: Form[ExecResultRow] = Form(
     mapping(
       "id" -> number,
       "param_id" -> number,
       "execute_filepath" -> optional(text),
       "output_dirpath" -> optional(text),
-      "start_timestamp" -> optional(sqlTimestamp), "end_timestamp" -> optional(sqlTimestamp), "exit_status" -> optional(text)
-    )(createExecResult.apply)(createExecResult.unapply)
+      "start_timestamp" -> optional(sqlTimestamp),
+      "end_timestamp" -> optional(sqlTimestamp),
+      "is_succeed" -> optional(boolean)
+    )(ExecResultRow.apply)(ExecResultRow.unapply)
   )
 }

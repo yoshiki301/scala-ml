@@ -1,4 +1,4 @@
-@(ExecResultForm: Form[controllers.databaseController.createExecResult])(implicit messagesProvider: MessagesProvider,request: RequestHeader)
+@(ExecResultForm: Form[dto.Tables.ExecResultRow])(implicit messagesProvider: MessagesProvider,request:RequestHeader)
 @import helper._
 
 @main("ExecResult"){
@@ -12,7 +12,7 @@
         @inputText(ExecResultForm("output_dirpath"), '_label -> "output_dirpath")
         @inputText(ExecResultForm("start_timestamp"), '_label -> "start_timestamp")
         @inputText(ExecResultForm("end_timestamp"), '_label -> "end_tiemstamp")
-        @inputText(ExecResultForm("exit_status"), '_label -> "exit_status")
+        @inputRadioGroup(ExecResultForm("is_succeed"), options = Seq("true" -> "true", "false" -> "false"))
         <input type="submit" value="create" formmethod="post">
     </fieldset>
     }
