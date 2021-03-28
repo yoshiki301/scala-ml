@@ -1,6 +1,6 @@
 import slick.codegen.SourceCodeGenerator
 
-name := """scala-server"""
+name := """postgres"""
 organization := "com.example"
 
 version := "1.0-SNAPSHOT"
@@ -13,8 +13,11 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick" % "5.0.0",
   "com.typesafe.play" %% "play-slick-evolutions" % "5.0.0",
   "com.typesafe.slick" %% "slick-codegen" % "3.3.3",
-  "org.postgresql" % "postgresql" % "42.2.19",
+  "org.postgresql" % "postgresql" % "42.2.19"
 )
+
+resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
+resolvers += "Akka Snapshot Repository" at "https://repo.akka.io/snapshots/"
 
 lazy val codegen = taskKey[Unit]("generate slick table code")
 
@@ -28,7 +31,7 @@ lazy val root = (project in file("."))
           "org.postgresql.Driver",
           "jdbc:postgresql://localhost:5432/postgres",
           "app/infrastructure",
-          "infrastructure.dto",
+          "dto",
           "root",
           "root",
           "true",
