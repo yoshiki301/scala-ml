@@ -13,7 +13,6 @@ import slick.jdbc.PostgresProfile.api._
 import dto.Tables._
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
 
 class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, cc: ControllerComponents)(implicit ec: ExecutionContext)
   extends AbstractController(cc) with HasDatabaseConfigProvider[PostgresProfile] with play.api.i18n.I18nSupport {
@@ -55,8 +54,6 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
 
   def postExecResult() = Action.async { implicit request =>
 
-    var sessionFlag = true
-
     ExecResultForm.bindFromRequest.fold (
       error => {
         Future{
@@ -65,28 +62,21 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
       },
       form => {
         val action = ExecResult.filter(_.id === form.id).exists.result.flatMap {
-          case false => ExecResult += ExecResultRow(form.id, form.paramId, form.executeFilepath, form.outputDirpath, form.startTimestamp, form.endTimestamp, form.isSucceed)
+          case false => (ExecResult += ExecResultRow(form.id, form.paramId, form.executeFilepath, form.outputDirpath, form.startTimestamp, form.endTimestamp, form.isSucceed)) >>
+            DBIO.from(Future{
+              Ok(Json.obj(
+                "message" -> "Created exec_result"
+              ))
+            })
           case true => {
-            sessionFlag = false
-            DBIO.failed(new Exception)
+            DBIO.from(Future {
+                Conflict(Json.obj(
+                  "message" -> "Conflict: already existing the same id"
+                ))
+              })
           }
         }
-
         db.run(action)
-
-        if (sessionFlag) {
-          Future {
-            Ok(Json.obj(
-              "message" -> "Created exec_result"
-            ))
-          }
-        } else {
-          Future {
-            Conflict(Json.obj(
-              "message" -> "Conflict: already existing the same id"
-            ))
-          }
-        }
       }
     )
   }
@@ -126,8 +116,6 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
 
   def postParams() = Action.async { implicit request =>
 
-    var sessionFlag = true
-
     ParamsForm.bindFromRequest.fold (
       error => {
         Future{
@@ -136,28 +124,21 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
       },
       form => {
         val action = Params.filter(_.paramId === form.paramId).exists.result.flatMap {
-          case false => Params += ParamsRow(form.paramId, form.paramLabel, form.paramValue)
+          case false => (Params += ParamsRow(form.paramId, form.paramLabel, form.paramValue)) >>
+            DBIO.from(Future{
+              Ok(Json.obj(
+                "message" -> "Created params"
+              ))
+            })
           case true => {
-            sessionFlag = false
-            DBIO.failed(new Exception)
+            DBIO.from(Future {
+                Conflict(Json.obj(
+                  "message" -> "Conflict: already existing the same param_id"
+                ))
+              })
           }
         }
-
         db.run(action)
-
-        if (sessionFlag) {
-          Future {
-            Ok(Json.obj(
-              "message" -> "Created params"
-            ))
-          }
-        } else {
-          Future {
-            Conflict(Json.obj(
-              "message" -> "Conflict: already existing the same param_id"
-            ))
-          }
-        }
       }
     )
   }
