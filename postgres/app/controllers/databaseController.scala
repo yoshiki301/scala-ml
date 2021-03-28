@@ -54,6 +54,9 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
   }
 
   def postExecResult() = Action.async { implicit request =>
+
+    var sessionFlag = true
+
     ExecResultForm.bindFromRequest.fold (
       error => {
         Future{
@@ -63,16 +66,13 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
       form => {
         val action = ExecResult.filter(_.id === form.id).exists.result.flatMap {
           case false => ExecResult += ExecResultRow(form.id, form.paramId, form.executeFilepath, form.outputDirpath, form.startTimestamp, form.endTimestamp, form.isSucceed)
-          case true => DBIO.failed(new Exception)
+          case true => {
+            sessionFlag = false
+            DBIO.failed(new Exception)
+          }
         }
 
-        var sessionFlag = false
-        val session = db.run(action)
-
-        session onComplete {
-          case Success(s) => sessionFlag = true
-          case Failure(f) => sessionFlag = false
-        }
+        db.run(action)
 
         if (sessionFlag) {
           Future {
@@ -119,6 +119,49 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
         }
       }
   }
+
+  def addParams() = Action { implicit request =>
+    Ok(views.html.addParams(ParamsForm))
+  }
+
+  def postParams() = Action.async { implicit request =>
+
+    var sessionFlag = true
+
+    ParamsForm.bindFromRequest.fold (
+      error => {
+        Future{
+          BadRequest(s"${error}")
+        }
+      },
+      form => {
+        val action = Params.filter(_.paramId === form.paramId).exists.result.flatMap {
+          case false => Params += ParamsRow(form.paramId, form.paramLabel, form.paramValue)
+          case true => {
+            sessionFlag = false
+            DBIO.failed(new Exception)
+          }
+        }
+
+        db.run(action)
+
+        if (sessionFlag) {
+          Future {
+            Ok(Json.obj(
+              "message" -> "Created params"
+            ))
+          }
+        } else {
+          Future {
+            Conflict(Json.obj(
+              "message" -> "Conflict: already existing the same param_id"
+            ))
+          }
+        }
+      }
+    )
+  }
+
 }
 
 object databaseController{
@@ -133,5 +176,13 @@ object databaseController{
       "end_timestamp" -> optional(sqlTimestamp),
       "is_succeed" -> optional(boolean)
     )(ExecResultRow.apply)(ExecResultRow.unapply)
+  )
+
+  implicit val ParamsForm: Form[ParamsRow] = Form(
+    mapping(
+      "param_id" -> number,
+      "param_label" -> optional(text),
+      "param_value" -> optional(text)
+    )(ParamsRow.apply)(ParamsRow.unapply)
   )
 }

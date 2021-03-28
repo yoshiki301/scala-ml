@@ -1,0 +1,15 @@
+@(ParamsForm: Form[dto.Tables.ParamsRow])(implicit messagesProvider: MessagesProvider,request:RequestHeader)
+@import helper._
+
+@main("Params"){
+    <h1>Add New Params Data</h1>
+    @form(action = routes.databaseController.postParams) {
+    @CSRF.formField
+    <fieldset>
+        @inputText(ParamsForm("param_id"), '_label -> "param_id")
+        @inputText(ParamsForm("param_label"), '_label -> "param_label")
+        @inputText(ParamsForm("param_value"), '_label -> "param_value")
+        <input type="submit" value="create" formmethod="post">
+    </fieldset>
+    }
+}
