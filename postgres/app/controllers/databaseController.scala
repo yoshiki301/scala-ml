@@ -70,10 +70,10 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
             })
           case true => {
             DBIO.from(Future{
-                Conflict(Json.obj(
-                  "message" -> "Conflict: already existing the same id"
-                ))
-              })
+              Conflict(Json.obj(
+                "message" -> "Conflict: already existing the same id"
+              ))
+            })
           }
         }
         db.run(action)
@@ -132,10 +132,10 @@ class databaseController @Inject()(protected val dbConfigProvider: DatabaseConfi
             })
           case true => {
             DBIO.from(Future{
-                Conflict(Json.obj(
-                  "message" -> "Conflict: already existing the same param_id"
-                ))
-              })
+              Conflict(Json.obj(
+                "message" -> "Conflict: already existing the same param_id"
+              ))
+            })
           }
         }
         db.run(action)
